@@ -19,11 +19,13 @@ logger = logging.getLogger(__name__)
 
 # Create an `about` view to render a static about page
 # def about(request):
-# ...
+def getAbout(request):
+    return render(request, 'djangoapp/about.html')
 
 
 # Create a `contact` view to return a static contact page
-#def contact(request):
+def getContact(request):
+    return render(request, 'djangoapp/about.html')
 
 # Create a `login_request` view to handle sign in request
 # def login_request(request):
@@ -38,6 +40,7 @@ logger = logging.getLogger(__name__)
 # ...
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
+# Testing
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
@@ -46,7 +49,7 @@ def get_dealerships(request):
 
 def getStaticPage(request):
     return render(request, 'djangoapp/static.html')
-    
+
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
 # ...
