@@ -30,6 +30,7 @@ APPEND_SLASH = True
 ALLOWED_HOSTS = [
     "localhost",
     "wajeehafarids.mybluemix.net",
+    "wajeehafarids.us-south.cf.appdomain.cloud",
     ]
 
 

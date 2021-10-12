@@ -1,11 +1,11 @@
   applications:
   - name: djangoapp
     routes:
-      - route: wajeehafarids.mybluemix.net
+      - route: wajeehafarids.us-south.cf.appdomain.cloud
     memory: 128M
     buildpack: python_buildpack
   - name: djangoapp-nginx
     routes:
-      - route: wajeehafarids.mybluemix.net/static
+      - route: wajeehafarids.us-south.cf.appdomain.cloud/static
     memory: 128M
     buildpack: staticfile_buildpack
