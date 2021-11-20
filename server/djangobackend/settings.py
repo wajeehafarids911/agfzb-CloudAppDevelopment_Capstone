@@ -31,6 +31,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "wajeehafarids.mybluemix.net",
     "wajeehafarids.us-south.cf.appdomain.cloud",
+    "bestcarsInstance.mybluemix.net",
+    "bestcarsInstance.mybluemix.net/static",
     ]
 
 
