@@ -5,5 +5,5 @@
     memory: 128M
   - name: djangoapp-nginx
     routes:
-      - route: bestcarsInstance.mybluemix.net/static
+      - route: bestcarsInstance1217.mybluemix.net/static
     memory: 128M
