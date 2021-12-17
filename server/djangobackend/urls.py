@@ -23,4 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('djangoapp/', include('djangoapp.urls')),
     path('api/', api_views.get_api_view),
+    path('api/dealership', api_views.get_dealership_list),
+    path('api/dealership_set', api_views.set_dealership),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
