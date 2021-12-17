@@ -8,8 +8,8 @@ from datetime import datetime
 import logging
 import json
 import random
-from api.serializers import DealershipRestSerializer
-from api.models import DealershipRest
+from api.serializers import DealershipRestSerializer, ReviewRestSerializer
+from api.models import DealershipRest, ReviewRest
 import cloudant
 from cloudant.client import Cloudant
 from cloudant.error import CloudantException
@@ -32,14 +32,12 @@ def update_database(request):
     database_output = get_cloudant_database(database_name="dealerships")
 
     if type(database_output) == cloudant.database.CloudantDatabase:
-        print("Database read successfully")
+        print("Database read successfully. Updating Dealerships... Please wait!")
         
         keys_in_dict = database_output.keys(remote=True)
         count_values = 0
         for key_i in keys_in_dict:
             value_i = dict(database_output.get(key_i, remote=True))
-            print("Type of value_i: ", type(value_i))
-            print(f"({key_i} : {value_i})")
             count_values += 1
 
 
@@ -53,23 +51,38 @@ def update_database(request):
                     pass
                 serializer_obj.save()
             else:
-                print("Object to be saved is not valid...")
-
-        #    serializer_obj = DealershipRestSerializer(data=dummy_data)
-        #    if serializer_obj.is_valid():
-        #        serializer_obj.save()
-        #    else:
-        #        print("Object to be saved is not valid...")
+                pass
+                # print("Object to be saved is not valid...")
         
-    print(type(database_output))
+        print("Finished updating Dealerships database")
     
+    database_output = get_cloudant_database(database_name="reviews")
+    if type(database_output) == cloudant.database.CloudantDatabase:
+        print("Updating Reviews Database... Please wait!")
+        
+        keys_in_dict = database_output.keys(remote=True)
+        count_values = 0
+        for key_i in keys_in_dict:
+            value_i = dict(database_output.get(key_i, remote=True))
+            count_values += 1
+            # print(f"key={key_i}, value={value_i}")
+
+
+            serializer_obj = ReviewRestSerializer(data=value_i)
+            if serializer_obj.is_valid():
+                print("Valid review found with dealerId: ", value_i["_id"])
+                try:
+                    review_obj = ReviewRest.objects.get(_id=value_i["_id"])
+                    review_obj.delete()
+                except:
+                    pass
+                serializer_obj.save()
+            else:
+                print("Review Object to be saved is not valid...")
+        
+        print("Finished updating Reviews database")
+
     return render(request, 'djangoapp/about.html')
-    #for data_i in database_entries:
-    #    serializer_obj = DealershipRestSerializer(data=dummy_data)
-    #    if serializer_obj.is_valid():
-    #        serializer_obj.save()
-    #    else:
-    #        print("Object to be saved is not valid...")
 
 
 def get_cloudant_database(database_name):
@@ -85,10 +98,8 @@ def get_cloudant_database(database_name):
             api_key=login_dict["IAM_API_KEY"],
             connect=True,
         )
-        print("Databases: {0}".format(client.all_dbs()))
         dbs_output = client[database_name]
         type_of_dbs_output = type(dbs_output)
-        print(f"type-of-{database_name}: {type_of_dbs_output}\n{database_name}: {dbs_output}")
         
         return dbs_output
 

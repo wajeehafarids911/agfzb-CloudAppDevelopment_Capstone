@@ -3,8 +3,8 @@ from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import DealershipRestSerializer
-from .models import DealershipRest
+from .serializers import DealershipRestSerializer, ReviewRestSerializer
+from .models import DealershipRest, ReviewRest
 
 @api_view(["GET"])
 def get_api_view(request):
@@ -18,6 +18,12 @@ def get_api_view(request):
 def get_dealership_list(request):
     dealerships_list = DealershipRest.objects.all()
     serializer_obj = DealershipRestSerializer(dealerships_list, many=True)
+    return Response(serializer_obj.data)
+
+@api_view(["GET"])
+def get_reviews_list(request):
+    reviews_list = ReviewRest.objects.all()
+    serializer_obj = ReviewRestSerializer(reviews_list, many=True)
     return Response(serializer_obj.data)
 
 
