@@ -10,21 +10,16 @@ import json
 
 @api_view(["GET"])
 def get_dealership_with_state(request):
+    dealerships_list = DealershipRest.objects.all()
     if "state" in request.GET:
         state_i = request.GET.get("state")
         dealerships_list = DealershipRest.objects.all().filter(st=state_i)
-        serializer_obj = DealershipRestSerializer(dealerships_list, many=True)
-        return HttpResponse(json.dumps(serializer_obj.data, indent=2), content_type="application/json")
         print(f"Found state: {state_i}")
     else:
         print("State not given in field...")
-    try:
-        dealer_obj = DealershipRest.objects.get(st=state_code)
-        print(f"Found objects for state={state_code}")
-    except:
-        pass
-
-    return render(request, 'djangoapp/about.html')
+    
+    serializer_obj = DealershipRestSerializer(dealerships_list, many=True)
+    return HttpResponse(json.dumps(serializer_obj.data, indent=2), content_type="application/json")
 
 
 @api_view(["GET"])
