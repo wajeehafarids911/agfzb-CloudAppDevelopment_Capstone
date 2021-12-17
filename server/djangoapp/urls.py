@@ -10,6 +10,8 @@ urlpatterns = [
     # name the URL
 
     # path for about view
+    
+    path(route='db/', view=views.update_database, name='n_database'),
     path(route='about/', view=views.getAbout, name='n_about'),
 
     # path for contact us view

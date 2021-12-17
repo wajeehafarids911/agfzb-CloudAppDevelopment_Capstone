@@ -2,8 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
-# from .models import related models
-# from .restapis import related methods
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -12,6 +10,10 @@ import json
 import random
 from api.serializers import DealershipRestSerializer
 from api.models import DealershipRest
+import cloudant
+from cloudant.client import Cloudant
+from cloudant.error import CloudantException
+import requests
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -23,18 +25,69 @@ logger = logging.getLogger(__name__)
 # Create an `about` view to render a static about page
 # def about(request):
 def getAbout(request):
-    print("Adding a new random object to DataBase")
-    
-    dummy_data = {"dealerId": random.randint(1, 999), 
-                  "state": "rand-state",
-                  "address": "rand-street"}
-    serializer_obj = DealershipRestSerializer(data=dummy_data)
-    if serializer_obj.is_valid():
-        serializer_obj.save()
-    else:
-        print("Object to be saved is not valid...")
     return render(request, 'djangoapp/about.html')
 
+def update_database(request):
+    print("Adding objects to DataBase")
+    database_output = get_cloudant_database(database_name="dealerships")
+
+    if type(database_output) == cloudant.database.CloudantDatabase:
+        print("Database read successfully")
+        
+        keys_in_dict = database_output.keys(remote=True)
+        count_values = 0
+        for key_i in keys_in_dict:
+            value_i = database_output.get(key_i, remote=True)
+            print("Type of value_i: ", type(value_i))
+            print(f"({key_i} : {value_i})")
+            count_values += 1
+            if count_values >= 2:
+                break
+        #    serializer_obj = DealershipRestSerializer(data=dummy_data)
+        #    if serializer_obj.is_valid():
+        #        serializer_obj.save()
+        #    else:
+        #        print("Object to be saved is not valid...")
+        
+    print(type(database_output))
+    
+    return render(request, 'djangoapp/about.html')
+    #for data_i in database_entries:
+    #    serializer_obj = DealershipRestSerializer(data=dummy_data)
+    #    if serializer_obj.is_valid():
+    #        serializer_obj.save()
+    #    else:
+    #        print("Object to be saved is not valid...")
+
+
+def get_cloudant_database(database_name):
+
+    login_dict = {
+        "COUCH_URL": "https://9a8f2c7b-c8c1-41e1-988e-182c3f5d926f-bluemix.cloudantnosqldb.appdomain.cloud",
+        "IAM_API_KEY": "YE7undQzSOjWO9FYgY3AIpv7GxGvr9yhL1prUay-HWPv",
+        "COUCH_USERNAME": "9a8f2c7b-c8c1-41e1-988e-182c3f5d926f-bluemix"
+    }
+    try:
+        client = Cloudant.iam(
+            account_name=login_dict["COUCH_USERNAME"],
+            api_key=login_dict["IAM_API_KEY"],
+            connect=True,
+        )
+        print("Databases: {0}".format(client.all_dbs()))
+        dbs_output = client[database_name]
+        type_of_dbs_output = type(dbs_output)
+        print(f"type-of-{database_name}: {type_of_dbs_output}\n{database_name}: {dbs_output}")
+        
+        return dbs_output
+
+    except CloudantException as ce:
+        print("unable to connect")
+        return {"error": ce}
+    except (requests.exceptions.RequestException, ConnectionResetError) as err:
+        print("connection error")
+        return {"error": err}
+
+    return {"Else statement reached"}
 
 # Create a `contact` view to return a static contact page
 def getContact(request):
