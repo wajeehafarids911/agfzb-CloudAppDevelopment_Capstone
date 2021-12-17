@@ -37,12 +37,24 @@ def update_database(request):
         keys_in_dict = database_output.keys(remote=True)
         count_values = 0
         for key_i in keys_in_dict:
-            value_i = database_output.get(key_i, remote=True)
+            value_i = dict(database_output.get(key_i, remote=True))
             print("Type of value_i: ", type(value_i))
             print(f"({key_i} : {value_i})")
             count_values += 1
-            if count_values >= 2:
-                break
+
+
+            serializer_obj = DealershipRestSerializer(data=value_i)
+            if serializer_obj.is_valid():
+                print("dealerId: ", value_i["_id"])
+                try:
+                    dealer_obj = DealershipRest.objects.get(_id=value_i["_id"])
+                    dealer_obj.delete()
+                except:
+                    pass
+                serializer_obj.save()
+            else:
+                print("Object to be saved is not valid...")
+
         #    serializer_obj = DealershipRestSerializer(data=dummy_data)
         #    if serializer_obj.is_valid():
         #        serializer_obj.save()
