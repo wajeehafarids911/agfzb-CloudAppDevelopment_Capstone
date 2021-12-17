@@ -27,4 +27,5 @@ urlpatterns = [
     path('api/dealership_set', api_views.set_dealership),
     path('api/dealership_del/<str:pk>/', api_views.del_dealership),
     path('api/reviews', api_views.get_reviews_list),
+    path('api/dealership?state=<str:state_code>', api_views.get_dealership_with_state),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

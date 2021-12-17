@@ -53,4 +53,10 @@ def del_dealership(request, pk):
     except:
         return Response(f"Dealership does not exist for dealerId={pk}")
 
-    
+def get_dealership_with_state(request, state_code):
+    try:
+        dealer_obj = DealershipRest.objects.get(st=state_code)
+        print(f"Found objects for state={state_code}")
+    except:
+        return render(request, 'djangoapp/about.html')
+
