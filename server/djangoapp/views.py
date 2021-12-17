@@ -41,7 +41,9 @@ def loginRequest(request):
         if user is not None:
             # If user is valid, call login method to login current user
             login(request, user)
-            return redirect('djangoapp:index.html')
+            print("User found and login was performed...")
+            # return redirect('djangoapp/about.html')
+            return redirect(request, 'djangoapp/index.html', context)
         else:
             # If not, return to login page again
             return render(request, 'djangoapp/user_login.html', context)
