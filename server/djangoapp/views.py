@@ -43,7 +43,7 @@ def loginRequest(request):
             login(request, user)
             print("User found and login was performed...")
             # return redirect('djangoapp/about.html')
-            return redirect(request, 'djangoapp/index.html', context)
+            return render(request, 'djangoapp/index.html', context)
         else:
             # If not, return to login page again
             return render(request, 'djangoapp/user_login.html', context)
