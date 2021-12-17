@@ -21,7 +21,7 @@ urlpatterns = [
 
     # path for logout
 
-    path(route='', view=views.get_dealerships, name='index'),
+    path(route='', view=views.get_dealerships, name='n_index'),
     path(route='static/', view=views.getStaticPage, name='n_static'),
     
 

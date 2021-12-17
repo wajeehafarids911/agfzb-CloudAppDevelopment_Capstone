@@ -5,6 +5,7 @@
     <title>{% block title_head %} Base {% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="shortcut icon" href="#">
+    <link rel="icon" href="{% static 'images/n2.png' %}" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -16,7 +17,7 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Best Cars</a>
+            <a class="navbar-brand" href="{% url 'djangoapp:n_index' %}">Best Cars</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
                 <a class="nav navbar-nav navbar-right" href="{% url 'djangoapp:n_about' %}">About Us</a>      
