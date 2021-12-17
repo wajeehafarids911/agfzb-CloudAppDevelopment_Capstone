@@ -21,6 +21,19 @@ def get_dealership_with_state(request):
     serializer_obj = DealershipRestSerializer(dealerships_list, many=True)
     return HttpResponse(json.dumps(serializer_obj.data, indent=2), content_type="application/json")
 
+@api_view(["GET"])
+def get_review_with_dealer_id(request):
+    reviews_list = ReviewRest.objects.all()
+    if "dealerId" in request.GET:
+        dealer_i = request.GET.get("dealerId")
+        reviews_list = ReviewRest.objects.all().filter(dealership=dealer_i)
+        print(f"Found dealer: {dealer_i}")
+    else:
+        print("State not given in field...")
+    
+    serializer_obj = ReviewRestSerializer(reviews_list, many=True)
+    return HttpResponse(json.dumps(serializer_obj.data, indent=2), content_type="application/json")
+
 
 @api_view(["GET"])
 def get_api_view(request):
