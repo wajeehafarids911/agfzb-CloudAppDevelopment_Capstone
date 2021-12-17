@@ -15,12 +15,13 @@ urlpatterns = [
     # path for contact us view
     path(route='contact/', view=views.getContact, name='n_contact'),
     # path for registration
+    path(route='register/', view=views.register_user, name='n_registration'),
 
     # path for login
     path(route='login/', view=views.login_request, name='n_login'),
-    path(route='logout/', view=views.logout_request, name='n_logout'),
 
     # path for logout
+    path(route='logout/', view=views.logout_request, name='n_logout'),
 
     path(route='', view=views.get_dealerships, name='n_index'),
     path(route='static/', view=views.getStaticPage, name='n_static'),

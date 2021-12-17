@@ -34,15 +34,15 @@
             </li>
             {% else %}
             <li>
-                <form class="form-inline" action="{% url 'djangoapp:n_login' %}" method="post">
-                    {% csrf_token %}
-                    <div class="input-group">
+                <div class="input-group">
+                    <form class="form-inline" action="{% url 'djangoapp:n_login' %}" method="post">
+                        {% csrf_token %}
                         <input type="text" class="form-control" placeholder="Username" name="username" >
                         <input type="password" class="form-control" placeholder="Password" name="psw" >
                         <button class="btn btn-primary" type="submit">Login</button>
-                        <a class="btn btn-link" href="#">Sign Up</a>
-                    </div>
-                </form>
+                    </form>
+                    <a class="btn btn-link" href="{% url 'djangoapp:n_registration' %}">Sign Up</a>
+                </div>
             </li>
             {% endif %}
         </ul>
