@@ -23,7 +23,7 @@ def main(dict):
             connect=True,
         )
         print("Databases: {0}".format(client.all_dbs()))
-        dbs_output = client["dealerships"]
+        dbs_output = client["reviews"]
         type_of_dbs_output = type(dbs_output)
         print(f"type-of-dealerships: {type_of_dbs_output}, dealerships: {dbs_output}")
         

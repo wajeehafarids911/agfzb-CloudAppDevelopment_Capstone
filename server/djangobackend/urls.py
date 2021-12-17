@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from api import views as api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('djangoapp/', include('djangoapp.urls')),
+    path('api/', api_views.get_api_view),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
