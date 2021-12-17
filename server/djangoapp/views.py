@@ -25,6 +25,7 @@ def getAbout(request):
 
 # Create a `contact` view to return a static contact page
 def getContact(request):
+    print("Called getContact...")
     return render(request, 'djangoapp/contact.html')
 
 # Create a `login_request` view to handle sign in request
