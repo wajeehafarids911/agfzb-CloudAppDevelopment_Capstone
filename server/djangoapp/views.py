@@ -29,7 +29,7 @@ def getContact(request):
     return render(request, 'djangoapp/contact.html')
 
 # Create a `login_request` view to handle sign in request
-def loginRequest(request):
+def login_request(request):
     context = {}
     # Handles POST request
     if request.method == "POST":
@@ -50,9 +50,11 @@ def loginRequest(request):
     else:
         return render(request, 'djangoapp/user_login.html', context)
 
+
 # Create a `logout_request` view to handle sign out request
-# def logout_request(request):
-# ...
+def logout_request(request):
+    logout(request)
+    return render(request, 'djangoapp/index.html')
 
 # Create a `registration_request` view to handle sign up request
 # def registration_request(request):
