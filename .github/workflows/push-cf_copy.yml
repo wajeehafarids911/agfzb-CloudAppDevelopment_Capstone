@@ -1,4 +1,4 @@
-name: Build and deploy to IBM Cloud Foundry
+name: Copy of Build and deploy to IBM Cloud Foundry
 
 on: workflow_dispatch
 
