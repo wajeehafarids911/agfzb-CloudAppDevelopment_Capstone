@@ -25,8 +25,26 @@ def get_dealership_list(request):
 def set_dealership(request):
     serializer_obj = DealershipRestSerializer(data=request.data)
     if serializer_obj.is_valid():
+        print("dealerId: ", request.data["dealerId"])
+        try:
+            dealer_obj = DealershipRest.objects.get(dealerId=request.data["dealerId"])
+            dealer_obj.delete()
+        except:
+            pass
         serializer_obj.save()
     else:
         print("Object to be saved is not valid...")
 
     return Response(serializer_obj.data)
+
+@api_view(["DELETE"])
+def del_dealership(request, pk):
+    try:
+        dealer_obj = DealershipRest.objects.get(dealerId=pk)
+        print("Type of dealer_obj: ", type(dealer_obj))
+        dealer_obj.delete()
+        return Response(f"Dealership dealerId={pk} deleted successfully!")
+    except:
+        return Response(f"Dealership does not exist for dealerId={pk}")
+
+    

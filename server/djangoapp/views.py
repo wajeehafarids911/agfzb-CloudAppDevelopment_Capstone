@@ -9,6 +9,9 @@ from django.contrib import messages
 from datetime import datetime
 import logging
 import json
+import random
+from api.serializers import DealershipRestSerializer
+from api.models import DealershipRest
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -20,6 +23,16 @@ logger = logging.getLogger(__name__)
 # Create an `about` view to render a static about page
 # def about(request):
 def getAbout(request):
+    print("Adding a new random object to DataBase")
+    
+    dummy_data = {"dealerId": random.randint(1, 999), 
+                  "state": "rand-state",
+                  "address": "rand-street"}
+    serializer_obj = DealershipRestSerializer(data=dummy_data)
+    if serializer_obj.is_valid():
+        serializer_obj.save()
+    else:
+        print("Object to be saved is not valid...")
     return render(request, 'djangoapp/about.html')
 
 
