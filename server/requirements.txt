@@ -5,3 +5,4 @@ Pillow==8.0.1
 djangorestframework
 markdown
 django-filter
+cloudant
