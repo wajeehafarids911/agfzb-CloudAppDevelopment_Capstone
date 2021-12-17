@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     "wajeehafarids.us-south.cf.appdomain.cloud",
     "bestcarsInstance.mybluemix.net",
     "bestcarsInstance.mybluemix.net/static",
+    "bestcars.mybluemix.net",
     ]
 
 
