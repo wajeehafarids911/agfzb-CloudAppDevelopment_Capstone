@@ -8,9 +8,10 @@
   <div class="container-fluid">
     <h2 class="text-center"> Dealer Reviews </h2>
     {% if user.is_authenticated %}
-    <button class="btn btn-primary" href="#">Add a Review</button>
+        <button class="btn btn-primary" href="#">Add a Review</button>
     {% endif %}
     <br><br><br>
+    {% if reviews_list %}
     <div class="card-columns">
         {% for review_i in reviews_list %}
         <div class="card">
@@ -23,6 +24,9 @@
         </div>
         {% endfor %}
     </div>
+    {% else %} 
+    <h3 class="text-center"> No Reviews for this Dealer Yet.<br> Please Select a Different Dealer. </h3>
+    {% endif %}
   </div>
 </body>
 <script>
