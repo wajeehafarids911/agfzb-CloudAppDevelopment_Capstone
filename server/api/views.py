@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import DealershipRestSerializer, ReviewRestSerializer
 from .models import DealershipRest, ReviewRest
-import json
+import json 
 
 
 @api_view(["GET"])
