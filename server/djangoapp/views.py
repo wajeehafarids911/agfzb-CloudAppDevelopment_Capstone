@@ -226,7 +226,7 @@ def register_user(request):
 def get_dealerships(request):
     database_output = get_cloudant_database_as_list("dealerships")
     print(database_output)
-    context = {}
+    context = {"dealership_list":database_output}
     if request.method == "GET":
         return render(request, 'djangoapp/index.html', context)
 
