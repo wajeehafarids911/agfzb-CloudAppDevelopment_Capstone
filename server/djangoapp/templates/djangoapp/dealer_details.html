@@ -9,13 +9,16 @@
     <h2 class="text-center"> Dealer Reviews </h2>
     <br>
     <div class="card-columns">
+        {% for review_i in reviews_list %}
         <div class="card">
             <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" style="width:10%;">
             <div class="card-body" >
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">{{review_i.car_model}}, {{review_i.car_make}}</h5>
+                <h5 class="card-title">{{review_i.car_year}}</h5>
+                <p class="card-text">{{review_i.review}}</p>
             </div>
         </div>
+        {% endfor %}
     </div>
   </div>
 </body>
