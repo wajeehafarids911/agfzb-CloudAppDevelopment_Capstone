@@ -193,9 +193,6 @@ def logout_request(request):
     return get_dealerships(request)
 
 def register_user(request):
-    return render(request, 'djangoapp/registration.html')
-
-def register_user(request):
     context = {}
     # If it is a POST request
     if request.method == 'POST':
@@ -221,10 +218,7 @@ def register_user(request):
             login(request, user)
         
         # Return to main page after logging or signing up the user
-        return render(request, 'djangoapp/index.html')
-
-    else: # If it is a GET request, just render the registration page
-        return render(request, 'djangoapp/registration.html', context)
+    return get_dealerships(request)
 
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
