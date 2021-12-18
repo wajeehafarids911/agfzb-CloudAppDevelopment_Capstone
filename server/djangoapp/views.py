@@ -112,6 +112,43 @@ def get_cloudant_database(database_name):
 
     return {"Else statement reached"}
 
+def get_cloudant_database_as_list(database_name):
+
+    login_dict = {
+        "COUCH_URL": "https://9a8f2c7b-c8c1-41e1-988e-182c3f5d926f-bluemix.cloudantnosqldb.appdomain.cloud",
+        "IAM_API_KEY": "YE7undQzSOjWO9FYgY3AIpv7GxGvr9yhL1prUay-HWPv",
+        "COUCH_USERNAME": "9a8f2c7b-c8c1-41e1-988e-182c3f5d926f-bluemix"
+    }
+    try:
+        client = Cloudant.iam(
+            account_name=login_dict["COUCH_USERNAME"],
+            api_key=login_dict["IAM_API_KEY"],
+            connect=True,
+        )
+        database_output = client[database_name]
+        type_of_dbs_output = type(database_output)
+        dbs_list = []
+        if type(database_output) == cloudant.database.CloudantDatabase:
+            print("Database read successfully. Updating Dealerships... Please wait!")
+        
+            keys_in_dict = database_output.keys(remote=True)
+            count_values = 0
+            for key_i in keys_in_dict:
+                value_i = dict(database_output.get(key_i, remote=True))
+                dbs_list.append(value_i)
+
+        return dbs_list
+
+    except CloudantException as ce:
+        print("unable to connect")
+        return {"error": ce}
+    except (requests.exceptions.RequestException, ConnectionResetError) as err:
+        print("connection error")
+        return {"error": err}
+
+    return {"Else statement reached"}
+
+
 # Create a `contact` view to return a static contact page
 def getContact(request):
     print("Called getContact...")
@@ -187,6 +224,8 @@ def register_user(request):
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 # Testing
 def get_dealerships(request):
+    database_output = get_cloudant_database_as_list("dealerships")
+    print(database_output)
     context = {}
     if request.method == "GET":
         return render(request, 'djangoapp/index.html', context)
