@@ -148,7 +148,15 @@ def get_cloudant_database_as_list(database_name):
 
     return {"Else statement reached"}
 
-
+def read_reviews_from_file(filename, dealer_id):
+    list_of_reviews = []
+    with open(filename) as json_file:
+        data = json.load(json_file)
+        for p in data['reviews']:
+            if p['dealership'] == dealer_id:
+                list_of_reviews.append(p)
+    return list_of_reviews
+    
 # Create a `contact` view to return a static contact page
 def getContact(request):
     print("Called getContact...")
@@ -217,10 +225,6 @@ def register_user(request):
         return render(request, 'djangoapp/registration.html', context)
 
 
-# Create a `registration_request` view to handle sign up request
-# def registration_request(request):
-# ...
-
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 # Testing
 def get_dealerships(request):
@@ -236,9 +240,9 @@ def getStaticPage(request):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 def get_dealer_details(request, dealer_id):
-    database_output = get_cloudant_database_as_list("reviews")
-    print(database_output)
-    context = {"reviews_list":database_output}
+    reviews_filtered = read_reviews_from_file("reviews-full.json", dealer_id)
+
+    context = {"reviews_list":reviews_filtered}
     if request.method == "GET":
         return render(request, 'djangoapp/dealer_details.html', context)
 
