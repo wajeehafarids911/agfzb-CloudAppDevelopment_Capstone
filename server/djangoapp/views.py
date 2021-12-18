@@ -181,10 +181,8 @@ def login_request(request):
             login(request, user)
             print("User found and login was performed...")
             # return redirect('djangoapp/about.html')
-            return render(request, 'djangoapp/index.html', context)
-        else:
-            # If not, return to login page again
-            return render(request, 'djangoapp/user_login.html', context)
+        return get_dealerships(request)
+        
     else:
         return render(request, 'djangoapp/user_login.html', context)
 
@@ -192,7 +190,7 @@ def login_request(request):
 # Create a `logout_request` view to handle sign out request
 def logout_request(request):
     logout(request)
-    return render(request, 'djangoapp/index.html')
+    return get_dealerships(request)
 
 def register_user(request):
     return render(request, 'djangoapp/registration.html')
@@ -234,8 +232,7 @@ def register_user(request):
 def get_dealerships(request):
     database_output = read_data_from_file("dealerships.json", "dealerships")
     context = {"dealership_list" : database_output}
-    if request.method == "GET":
-        return render(request, 'djangoapp/index.html', context)
+    return render(request, 'djangoapp/index.html', context)
 
 
 def getStaticPage(request):
