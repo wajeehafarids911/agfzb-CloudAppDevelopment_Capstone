@@ -235,8 +235,12 @@ def getStaticPage(request):
     return render(request, 'djangoapp/static.html')
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    database_output = get_cloudant_database_as_list("reviews")
+    print(database_output)
+    context = {"reviews_list":database_output}
+    if request.method == "GET":
+        return render(request, 'djangoapp/dealer_details.html', context)
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
